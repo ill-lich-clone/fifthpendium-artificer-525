@@ -1,0 +1,18 @@
+# Local Foundry runtime assets (see parent AGENTS.md).
+/assets/
+
+# LevelDB diagnostics and locks. Numbered .log files contain compendium data.
+/packs/**/LOCK
+/packs/**/LOG
+/packs/**/LOG.old*
+
+# Dependencies, coverage, and temporary files.
+node_modules/
+coverage/
+.env
+.env.*
+!.env.example
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
