@@ -1,4 +1,5 @@
 import "./artillerist-cannon.mjs";
+import "./mechanus-heirloom.mjs";
 
 Hooks.once("ready", async () => {
   if (game.system.id === "dnd5e") {

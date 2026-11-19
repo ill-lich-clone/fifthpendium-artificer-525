@@ -24,6 +24,10 @@ test("the loaded module entrypoint registers cannon summoning without intercepti
     "dnd5e treats an explicit false as a veto, so the cannon hook must let other summons proceed"
   );
   assert.deepEqual(actorUpdates, { items: [] });
+  assert.ok(
+    registeredHooks.some(hook => hook.name === "dnd5e.preRollAttack"),
+    "the existing Artificer entrypoint must load the heirloom automation"
+  );
   assert.equal(
     registeredHooks.some(hook => hook.name === "dnd5e.preRestCompleted"),
     false,

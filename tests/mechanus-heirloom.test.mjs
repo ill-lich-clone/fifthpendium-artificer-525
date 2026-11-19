@@ -95,8 +95,13 @@ test("summoned MK-I inherits the caster's full proficiency and artificer class l
     attributes: { prof: 4 },
     abilities: { int: { value: 18 }, wis: { value: 12 }, cha: { value: 8 } }
   }, { value: ["common"], custom: "Гномий" });
-  assert.deepEqual(update.system.attributes, { ac: { flat: 20 }, hp: { value: 30, max: 30, formula: "5d6" } });
+  assert.deepEqual(update.system.attributes, { ac: { override: 20 }, hp: { value: 30, max: 30, formula: "5d6" } });
   assert.deepEqual(update.system.abilities, { int: { value: 18 }, wis: { value: 12 }, cha: { value: 8 } });
+  assert.deepEqual(update.system.skills, {
+    arc: { ability: "int", value: 1 },
+    prc: { ability: "wis", value: 2 },
+    ste: { ability: "dex", value: 2 }
+  });
   assert.deepEqual(update.system.traits.languages, { value: ["common"], custom: "Модронский; Гномий" });
 });
 

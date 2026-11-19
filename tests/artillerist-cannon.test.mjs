@@ -4,8 +4,30 @@ import assert from "node:assert/strict";
 import {
   applyCannonSummonOverrides,
   buildCannonActivityUpdate,
+  cannonRecoveryDefault,
   mergeCannonItemUpdate
 } from "../scripts/artillerist-cannon.mjs";
+
+test("the cannon free use gets a native long-rest recovery only when no recovery was authored", () => {
+  const cannon = {
+    type: "feat",
+    system: {
+      uses: { max: "1", spent: 1, recovery: [] },
+      activities: [{
+        type: "summon",
+        profiles: [{ uuid: "Compendium.fifthpendium-artificer-525.creatures.Actor.QVylQx3S1C6DVTUM" }],
+        consumption: { targets: [{ type: "itemUses", value: "1", target: "" }] }
+      }]
+    }
+  };
+  assert.deepEqual(cannonRecoveryDefault(cannon), [{ period: "lr", type: "recoverAll" }]);
+  assert.equal(cannon.system.uses.spent, 1);
+  cannon.system.uses.recovery = [{ period: "sr", type: "formula", formula: "1d4" }];
+  assert.equal(cannonRecoveryDefault(cannon), undefined);
+  cannon.system.uses.recovery = [];
+  cannon.system.activities[0].profiles[0].uuid = "Actor.anotherSummon";
+  assert.equal(cannonRecoveryDefault(cannon), undefined);
+});
 
 test("summoned cannon uses artificer class level on a multiclass character", () => {
   const activity = {

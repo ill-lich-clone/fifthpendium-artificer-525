@@ -13,4 +13,5 @@
 - [x] Pin and fix the cannon hook's cancellation and multiclass level. Preserve its existing compendium documents, formulas and recovery.
 - [x] Test the six stage definitions, spell filtering, per-beam bonus and MK-I stat scaling. Build the world item and actor sources and connect the dnd5e hook callbacks.
 - [x] Test idempotent installation and repeatable stage updates. Register a GM-only installer and stage change.
-- [ ] Run the module's unit tests, syntax and manifest checks. Verify live documents when the world write interface is connected.
+- [x] Run the module's unit tests, syntax and manifest checks. Verify all eight compendiums, the spell list, both summoned actors and long-rest recovery in an isolated Foundry 14.369 / dnd5e 6.0.6 world.
+- [ ] Confirm creation of the item and drone in the production world after the GM enables the module.

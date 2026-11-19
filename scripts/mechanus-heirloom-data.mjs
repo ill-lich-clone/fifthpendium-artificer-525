@@ -22,6 +22,11 @@ const STAGES = [
   ["rare", 5000, 40, "Автономный дрон Механуса (МК-I)"],
   ["rare", 10000, 80, "Фокусирующее ядро II"]
 ];
+const DRONE_SKILLS = {
+  arc: { ability: "int", value: 1 },
+  prc: { ability: "wis", value: 2 },
+  ste: { ability: "dex", value: 2 }
+};
 
 export function getCoreBonus(stage) {
   return stage >= 6 ? 2 : Number(stage >= 3);
@@ -138,14 +143,14 @@ export function buildDrone() {
         int: { value: 10 }, wis: { value: 10, proficient: 1 }, cha: { value: 10 }
       },
       attributes: {
-        ac: { calc: "flat", flat: 18 },
+        ac: { override: 18 },
         hp: { value: 10, max: 10, formula: "1d6" },
         movement: { walk: 30, fly: 60, hover: true, units: "ft" },
         senses: { darkvision: 60, units: "ft" },
         spellcasting: "int"
       },
       details: { type: { value: "construct" }, alignment: "Законно-нейтральный", cr: 0 },
-      skills: { arc: { value: 1 }, prc: { value: 2 }, ste: { value: 2 } },
+      skills: structuredClone(DRONE_SKILLS),
       traits: {
         size: "tiny", di: { value: ["poison"] },
         ci: { value: ["frightened", "exhaustion", "poisoned", "charmed"] },
@@ -189,8 +194,9 @@ export function buildDroneOverrides(rollData, ownerLanguages) {
     [id, { value: rollData.abilities?.[id]?.value ?? 10 }]));
   return {
     system: {
-      attributes: { ac: { flat: 16 + proficiency }, hp: { value: hp, max: hp, formula: level + "d6" } },
+      attributes: { ac: { override: 16 + proficiency }, hp: { value: hp, max: hp, formula: level + "d6" } },
       abilities,
+      skills: structuredClone(DRONE_SKILLS),
       traits: {
         languages: {
           value: [...(ownerLanguages?.value ?? [])],

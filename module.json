@@ -1,10 +1,10 @@
 {
   "id": "fifthpendium-artificer-525",
-  "title": "Artificer for dnd5e 5.2.5",
-  "version": "1.0.2",
+  "title": "Artificer 2024",
+  "version": "1.1.0",
   "compatibility": {
-    "minimum": "13.347",
-    "verified": "13"
+    "minimum": "14.369",
+    "verified": "14.369"
   },
   "relationships": {
     "systems": [
@@ -12,8 +12,8 @@
         "id": "dnd5e",
         "type": "system",
         "compatibility": {
-          "minimum": "5.2.0",
-          "verified": "5.2.5"
+          "minimum": "6.0.6",
+          "verified": "6.0.6"
         }
       }
     ],
@@ -22,8 +22,8 @@
         "id": "auraeffects",
         "type": "module",
         "compatibility": {
-          "minimum": "1.5.2",
-          "verified": "1.5.2"
+          "minimum": "2.3.0",
+          "verified": "2.3.0"
         }
       }
     ]
@@ -88,7 +88,6 @@
   ],
   "esmodules": [
     "scripts/register-artificer.mjs",
-    "scripts/artillerist-cannon.mjs",
-    "scripts/mechanus-heirloom.mjs"
+    "scripts/artillerist-cannon.mjs"
   ]
 }
