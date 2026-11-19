@@ -15,10 +15,15 @@ test("the loaded module entrypoint registers cannon summoning without intercepti
     delete globalThis.Hooks;
   }
 
-  assert.ok(
-    registeredHooks.some(hook => hook.name === "dnd5e.preSummonToken"),
-    "the entrypoint loaded by Foundry must install the cannon summon override"
+  const summon = registeredHooks.find(hook => hook.name === "dnd5e.preSummonToken");
+  assert.ok(summon, "the entrypoint loaded by Foundry must install the cannon summon override");
+  const actorUpdates = { items: [] };
+  assert.notEqual(
+    summon.callback({}, { uuid: "Actor.notTheCannon" }, { actorUpdates }),
+    false,
+    "dnd5e treats an explicit false as a veto, so the cannon hook must let other summons proceed"
   );
+  assert.deepEqual(actorUpdates, { items: [] });
   assert.equal(
     registeredHooks.some(hook => hook.name === "dnd5e.preRestCompleted"),
     false,

@@ -55,9 +55,9 @@ function isCannonSummon(profile) {
 }
 
 function getArtificerLevel(activity, rollData) {
-  return activity?.relevantLevel
-    ?? rollData?.classes?.artificer?.levels
+  return rollData?.classes?.artificer?.levels
     ?? activity?.actor?.classes?.artificer?.system?.levels
+    ?? activity?.relevantLevel
     ?? 0;
 }
 
@@ -75,4 +75,6 @@ export function applyCannonSummonOverrides(activity, profile, config) {
   return true;
 }
 
-globalThis.Hooks?.on("dnd5e.preSummonToken", applyCannonSummonOverrides);
+globalThis.Hooks?.on("dnd5e.preSummonToken", (activity, profile, config) => {
+  applyCannonSummonOverrides(activity, profile, config);
+});

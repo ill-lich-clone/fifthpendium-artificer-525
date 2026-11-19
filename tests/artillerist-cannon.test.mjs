@@ -2,9 +2,28 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import {
+  applyCannonSummonOverrides,
   buildCannonActivityUpdate,
   mergeCannonItemUpdate
 } from "../scripts/artillerist-cannon.mjs";
+
+test("summoned cannon uses artificer class level on a multiclass character", () => {
+  const activity = {
+    relevantLevel: 9,
+    actor: {
+      getRollData: () => ({
+        abilities: { int: { mod: 4 } },
+        attributes: { prof: 4 },
+        classes: { artificer: { levels: 6 } }
+      })
+    }
+  };
+  const profile = { uuid: "Compendium.fifthpendium-artificer-525.creatures.Actor.QVylQx3S1C6DVTUM" };
+  const config = { actorUpdates: { items: [] } };
+
+  assert.equal(applyCannonSummonOverrides(activity, profile, config), true);
+  assert.equal(config.actorUpdates.items[0]["system.activities.yFMtvzeisfFbPuxk.healing.custom.formula"], "1d8 + 4");
+});
 
 test("level 3 cannon uses artificer attack, save, Protector, and action economy", () => {
   const update = buildCannonActivityUpdate({
